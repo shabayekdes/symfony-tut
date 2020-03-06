@@ -16,11 +16,7 @@ class MainController extends AbstractController
      */
     public function index()
     {
-        // return $this->json([
-        //     'message' => 'Welcome to your new controller!',
-        //     'path' => 'src/Controller/MainController.php',
-        // ]);
-        return new Response('<h1>Welcome page</h1>');
+        return $this->render('pages/welcome.html.twig');
     }
     /**
      * About Page
@@ -29,7 +25,7 @@ class MainController extends AbstractController
      */
     public function about()
     {
-        return new Response('<h1>About page</h1>');
+        return $this->render('pages/about.html.twig');
     }
     /**
      * Posts Page
@@ -42,6 +38,8 @@ class MainController extends AbstractController
     {
         $post = $request->get('slug');
 
-        return new Response('<h1>Posts page - ' . $post .'</h1>');
+        return $this->render('pages/posts.html.twig', [
+            'post' => $post
+        ]);
     }
 }
