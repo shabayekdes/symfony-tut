@@ -27,19 +27,5 @@ class MainController extends AbstractController
     {
         return $this->render('pages/about.html.twig');
     }
-    /**
-     * Posts Page
-     *
-     * @Route("/posts/{slug?}", name="posts")
-     * @param Request $request
-     * @return void
-     */
-    public function posts(Request $request)
-    {
-        $post = $request->get('slug');
 
-        return $this->render('pages/posts.html.twig', [
-            'post' => $post
-        ]);
-    }
 }

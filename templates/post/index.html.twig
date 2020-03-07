@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello PostController!{% endblock %}
+
+{% block body %}
+<h3>List of all posts</h3>
+<a href="{{ path('post.create') }}" >
+    Add New
+</a>
+<table class="table">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Title</th>
+      <th scope="col">Action</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for post in posts%}
+    <tr>
+        <th scope="row">{{ post.id }}</th>
+        <td>
+            <a href="{{ path('post.show', {id: post.id}) }}" >
+                {{ post.title }}
+            </a>
+        </td>
+        <td>
+            <a href="{{ path('post.delete', {id: post.id}) }}" class="text-danger" >
+                X
+            </a>
+        </td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% endblock %}
