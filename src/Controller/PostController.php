@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Post;
+use App\Form\PostType;
 use App\Repository\PostRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -41,14 +42,26 @@ class PostController extends AbstractController
     {
         // Create a new post
         $post = new Post();
-        $post->setTitle('Third Title');
 
-        // Entity Manager
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($post);
-        $em->flush();
+        $form = $this->createForm(PostType::class, $post);
 
-        return $this->render('post/create.html.twig');
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted()) {
+            // Entity Manager
+            $em = $this->getDoctrine()->getManager();
+
+            $em->persist($post);
+            $em->flush();
+
+            $this->addFlash('success', 'Post was created successfully');
+
+            return $this->redirectToRoute('post.index');
+        }
+
+        return $this->render('post/create.html.twig', [
+            'form' => $form->createView()
+        ]);
     }
     /**
      * Show post
@@ -76,6 +89,8 @@ class PostController extends AbstractController
 
         $em->remove($post);
         $em->flush();
+
+        $this->addFlash('success', 'Post was deleted!!');
 
         return $this->redirectToRoute('post.index');
     }
